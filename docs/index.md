@@ -9,19 +9,21 @@ This is the fusionlib project. It is a Python package designed to provide functi
 
 ## Getting Started
 
-!!! info "Install from source"
-    
-    This project is currently under development. For the latest features and bug fixes, it is recommended to install directly from the GitHub repository.
-    To install the latest development version from GitHub, use the following command:
+This project is currently under development. For the latest features and bug fixes, it is recommended to install directly from the GitHub repository.
+To install the latest development version from GitHub, use the following command:
 
-    ```bash
-    git clone https://github.com/tanganke/fusionlib.git
-    pip install -e fusionlib
-    ```
+```bash
+git clone https://github.com/tanganke/fusionlib.git
+pip3 install -e fusionlib
+```
 
 or install from PyPI:
 
-```bash
-pip3 install -U fusionlib
-```
+!!! warning "Install from PyPI"
+    
+    This project is currently under development. For the latest features and bug fixes, it is recommended to install directly from the GitHub repository.
+
+    ```bash
+    pip3 install -U fusionlib
+    ```
 

@@ -103,12 +103,12 @@ def state_dict_sub(a: _StateDict, b: _StateDict, strict: bool = True, device=Non
     Returns the difference between two state dicts `a-b`.
 
     Args:
-        a (StateDict): The first state dict.
-        b (StateDict): The second state dict.
+        a (_StateDict): The first state dict.
+        b (_StateDict): The second state dict.
         strict (bool): Whether to check if the keys of the two state dicts are the same.
 
     Returns:
-        StateDict: The difference between the two state dicts.
+        _StateDict: The difference between the two state dicts.
     """
     if strict:
         assert set(a.keys()) == set(b.keys())

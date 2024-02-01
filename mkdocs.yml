@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Model Merging: 
       - Simple Averaging: merging/simple_averaging.md
+      - Task Arithmetic: merging/task_arithmetic.md
   - API Documents:
       - fusionlib: api/fusionlib.md
       - fusionlib.utils: api/fusionlib.utils.md
