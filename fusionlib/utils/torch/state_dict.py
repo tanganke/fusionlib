@@ -88,3 +88,22 @@ class StateDict:
 
     def __getattr__(self, name: str) -> Any:
         return getattr(self.state_dict, name)
+
+    def to_vector(self) -> torch.Tensor:
+        """
+        Convert the state dictionary to a vector.
+
+        Returns:
+            torch.Tensor: The state dictionary as a vector.
+        """
+        return torch.nn.utils.parameters_to_vector(self.state_dict.values())
+
+    def from_vector(self, vector: torch.Tensor):
+        """
+        Convert a vector to a state dictionary.
+
+        Args:
+            vector (torch.Tensor): The vector to convert to a state dictionary.
+        """
+        torch.nn.utils.vector_to_parameters(vector, self.state_dict.values())
+        return self
