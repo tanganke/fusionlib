@@ -57,12 +57,6 @@ class timer:
         self.start_time = time.time()
 
     def __enter__(self) -> None:
-        """
-        Sets the start time and logs an optional message indicating the start of the code block execution.
-
-        Args:
-            msg: str, optional message to log
-        """
         self.start_time = time.time()
         if self.msg is None:
             if self.func is not None:
