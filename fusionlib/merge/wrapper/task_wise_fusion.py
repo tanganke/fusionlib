@@ -24,7 +24,7 @@ from torch import Tensor, nn
 from torch.func import functional_call
 
 from fusionlib.utils import timer
-from fusionlib.utils.torch import StateDict, check_parameters_all_equal
+from fusionlib.utils.torch import _StateDict, check_parameters_all_equal
 
 log = logging.getLogger(__name__)
 
@@ -63,7 +63,7 @@ def _fuse_weights(task_wise_weight: Tensor, tensors: List[Tensor]):
     return sum(task_wise_weight[i] * w.to(device) for i, w in enumerate(tensors))
 
 
-def fuse_weights(task_wise_weight: Tensor, state_dicts: List[StateDict]) -> StateDict:
+def fuse_weights(task_wise_weight: Tensor, state_dicts: List[_StateDict]) -> _StateDict:
     """
     This function fuses the weights of the models and returns a state dictionary.
 
@@ -92,7 +92,7 @@ class TaskWiseMergedModel(nn.Module):
         self,
         pretrained_model: nn.Module,
         task_wise_weight: Tensor,
-        task_vectors: List[StateDict],
+        task_vectors: List[_StateDict],
         clamp_weights: bool = True,
     ):
         super().__init__()
@@ -100,7 +100,7 @@ class TaskWiseMergedModel(nn.Module):
 
         self.task_wise_weight = nn.Parameter(task_wise_weight, requires_grad=True)
         self.task_vectors = task_vectors  # should be on cpu
-        self.pretrained_state_dict: StateDict = self.model.state_dict(keep_vars=False)
+        self.pretrained_state_dict: _StateDict = self.model.state_dict(keep_vars=False)
         check_parameters_all_equal(self.task_vectors)
         self.clamp_weights = clamp_weights
         self.merged_state_dict = None

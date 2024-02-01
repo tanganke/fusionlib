@@ -1,6 +1,6 @@
-from typing import Dict, List
+from typing import Dict, List, Mapping
 
 from torch import Tensor
 from typing_extensions import TypeAlias
 
-StateDict: TypeAlias = Dict[str, Tensor]
+_StateDict: TypeAlias = Mapping[str, Tensor]

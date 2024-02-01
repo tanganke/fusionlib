@@ -1,2 +1,2 @@
 from .parameters import *
-from .type import StateDict
+from .type import _StateDict

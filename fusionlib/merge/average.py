@@ -4,21 +4,21 @@ from typing import List, Mapping, Union
 import torch
 from torch import Tensor, nn
 
-from fusionlib.utils.torch import StateDict
+from fusionlib.utils.torch import _StateDict
 from fusionlib.utils.torch.state_dict_arithmetic import state_dict_avg
 
 
-def simple_average(modules: List[Union[nn.Module, StateDict]]):
+def simple_average(modules: List[Union[nn.Module, _StateDict]]):
     """
     Averages the parameters of a list of PyTorch modules or state dictionaries.
 
     This function takes a list of PyTorch modules or state dictionaries and returns a new module with the averaged parameters, or a new state dictionary with the averaged parameters.
 
     Args:
-        modules (List[Union[nn.Module, StateDict]]): A list of PyTorch modules or state dictionaries.
+        modules (List[Union[nn.Module, _StateDict]]): A list of PyTorch modules or state dictionaries.
 
     Returns:
-        Union[nn.Module, StateDict]: A new PyTorch module with the averaged parameters, or a new state dictionary with the averaged parameters.
+        module_or_state_dict (Union[nn.Module, _StateDict]): A new PyTorch module with the averaged parameters, or a new state dictionary with the averaged parameters.
 
     Examples:
         >>> import torch.nn as nn

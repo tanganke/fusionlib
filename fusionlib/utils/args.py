@@ -18,15 +18,16 @@ def verify_str_arg(
 ) -> T:
     R"""
     check is string argument ``value`` with name ``arg`` in `valid_values`, raise `ValueError` if failed.
+    
     Examples:
 
-        if you have a function ``f`` accept `batch_size` as argument, such as:
+    if you have a function ``f`` accept `batch_size` as argument, such as:
 
-        ```python
-        def f(batch_size='half'):
-            verify_str_arg(batch_size, 'batch_size', ['half', 'full'])
-            ...
-        ```
+    ```python
+    def f(batch_size='half'):
+        verify_str_arg(batch_size, 'batch_size', ['half', 'full'])
+        ...
+    ```
 
     Args:
         value (T): `str` or `bytes`

@@ -12,7 +12,7 @@ from torch import Tensor, nn
 from torch.func import functional_call
 
 from fusionlib.utils import timer
-from fusionlib.utils.torch import StateDict, check_parameters_all_equal
+from fusionlib.utils.torch import _StateDict, check_parameters_all_equal
 
 __all__ = [
     "get_block_wise_weights_by_partitions",
@@ -175,7 +175,7 @@ def _fuse_weights(block_wise_weights: Tensor, model_weights: List[Tensor]) -> Te
         return ans
 
 
-def fuse_weights(block_wise_weight: Dict[str, Tensor], state_dicts: List[StateDict]):
+def fuse_weights(block_wise_weight: Dict[str, Tensor], state_dicts: List[_StateDict]):
     """
     Returns a state dict of fused weights for a given list of state dicts of weights.
 
@@ -229,7 +229,7 @@ class BlockWiseMergedModel(nn.Module):
         self,
         pretrained_model: nn.Module,
         block_wise_weight: Dict[str, Tensor],
-        task_vectors: List[StateDict],
+        task_vectors: List[_StateDict],
         clamp_weights: bool = True,
     ):
         super().__init__()

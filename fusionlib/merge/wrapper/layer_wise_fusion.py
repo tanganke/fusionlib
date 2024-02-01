@@ -8,7 +8,7 @@ from torch import Tensor, nn
 from torch.func import functional_call
 
 from fusionlib.utils import timer
-from fusionlib.utils.torch import StateDict, check_parameters_all_equal
+from fusionlib.utils.torch import _StateDict, check_parameters_all_equal
 
 __all__ = ["get_layer_wise_weights", "fuse_weights", "LayerWiseMergedModel"]
 
@@ -54,7 +54,7 @@ def _fuse_weights(layer_wise_weight: Tensor, tensors: List[Tensor]):
     )
 
 
-def fuse_weights(layer_wise_weight: Tensor, state_dicts: List[StateDict]) -> StateDict:
+def fuse_weights(layer_wise_weight: Tensor, state_dicts: List[_StateDict]) -> _StateDict:
     """
     Fuse the weights of multiple models using layer-wise fusion.
 
@@ -84,7 +84,7 @@ class LayerWiseMergedModel(nn.Module):
         self,
         pretrained_model: nn.Module,
         layer_wise_weight: Tensor,
-        task_vectors: List[StateDict],
+        task_vectors: List[_StateDict],
         clamp_weights: bool = True,
     ):
         super().__init__()
