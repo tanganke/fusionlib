@@ -7,6 +7,6 @@ This is the Fusion package. It is a Python package designed to provide functiona
 You can install Fusion from PyPI:
 
 ```bash
-pip install fusion
+pip install fusionlib
 ```
 

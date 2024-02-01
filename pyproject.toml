@@ -2,12 +2,13 @@
 requires = ["setuptools", "wheel"]
 
 [project]
-name = "fusion"
+name = "fusionlib"
 version = "0.0.1"
 description = "This is a Python package designed to provide functionality related to model fusion."
+readme = "README.md"
 
 [project.urls]
-repository = "https://github.com/tanganke/fusion"
+repository = "https://github.com/tanganke/fusionlib"
 
 [tool.black]
 line-length = 88
