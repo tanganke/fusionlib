@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 
 [project]
 name = "fusionlib"
-version = "0.0.1"
+version = "0.0.2"
 description = "This is a Python package designed to provide functionality related to model fusion."
 readme = "README.md"
 
