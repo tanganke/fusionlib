@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Literal, Tuple
 
 import torch
 import torch.nn as nn
@@ -105,4 +105,16 @@ def softmax_entropy(x: Tensor):
     Returns:
         Tensor: Softmax entropy of the input tensor.
     """
-    return -(x.softmax(1) * x.log_softmax(1)).sum(1)
+    probs = x.softmax(-1)
+    return -(probs * probs.log()).sum(-1)
+
+
+def entropy_loss(logits: Tensor, reduction: Literal["mean", "max"] = "mean"):
+    assert logits.dim() == 2, f"expected logits to have dim 2, got {logits.dim()}"
+    entropy = softmax_entropy(logits)
+    if reduction == "mean":
+        return entropy.mean()
+    elif reduction == "max":
+        return entropy.max()
+    else:
+        raise ValueError(f"reduction must be 'mean' or 'max', got {reduction}")

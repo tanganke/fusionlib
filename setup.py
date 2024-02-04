@@ -2,5 +2,6 @@ from setuptools import find_packages, setup
 
 setup(
     name="fusionlib",
-    packages=find_packages(),
+    packages=["fusionlib"],
+    url="https://github.com/tanganke/fusionlib",
 )

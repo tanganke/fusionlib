@@ -54,7 +54,9 @@ def _fuse_weights(layer_wise_weight: Tensor, tensors: List[Tensor]):
     )
 
 
-def fuse_weights(layer_wise_weight: Tensor, state_dicts: List[_StateDict]) -> _StateDict:
+def fuse_weights(
+    layer_wise_weight: Tensor, state_dicts: List[_StateDict]
+) -> _StateDict:
     """
     Fuse the weights of multiple models using layer-wise fusion.
 
@@ -83,7 +85,7 @@ class LayerWiseMergedModel(nn.Module):
     def __init__(
         self,
         pretrained_model: nn.Module,
-        layer_wise_weight: Tensor,
+        layer_wise_weights: Tensor,
         task_vectors: List[_StateDict],
         clamp_weights: bool = True,
     ):
@@ -92,9 +94,9 @@ class LayerWiseMergedModel(nn.Module):
         for p in self.model.parameters():
             p.requires_grad_(False)
 
-        self.layer_wise_weight = nn.Parameter(layer_wise_weight, requires_grad=True)
+        self.layer_wise_weights = nn.Parameter(layer_wise_weights, requires_grad=True)
         self.task_vectors = task_vectors
-        self.pretrained_state_dict = self.model.state_dict()
+        self.pretrained_state_dict = self.model.state_dict(keep_vars=True)
         check_parameters_all_equal(self.task_vectors)
         self.merged_state_dict = None
         self.clamp_weights = clamp_weights
@@ -109,17 +111,17 @@ class LayerWiseMergedModel(nn.Module):
         Call this after each update step.
         """
         if self.clamp_weights:
-            layer_wise_weight = self.layer_wise_weight.clamp(0, 1)
+            layer_wise_weights = self.layer_wise_weights.clamp(0, 1)
         else:
-            layer_wise_weight = self.layer_wise_weight
-        device = layer_wise_weight.device
-        task_vector = fuse_weights(layer_wise_weight, self.task_vectors)
+            layer_wise_weights = self.layer_wise_weights
+        device = layer_wise_weights.device
+        task_vector = fuse_weights(layer_wise_weights, self.task_vectors)
         self.merged_state_dict = {
             k: self.pretrained_state_dict[k].to(device, non_blocking=True)
             for k in self.pretrained_state_dict.keys()
         }
         for k in task_vector.keys():
-            self.merged_state_dict[k] += task_vector[k]
+            self.merged_state_dict[k] = self.merged_state_dict[k] + task_vector[k]
 
     def forward(self, *args, **kwargs):
         if self.merged_state_dict is None:

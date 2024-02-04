@@ -14,9 +14,9 @@ You can install fusionlib from PyPI:
 pip install fusionlib
 ```
 
-# Citation
+## Citation
 
-If you use fusionlib in your research and find this is package is helpful, consider cite it using the following BibTeX entry:
+If fusionlib contributes to your research and you find this package beneficial, please consider citing it using the following BibTeX entry:
 
 ```bibtex
 @misc{tanganke2022fusionlib,

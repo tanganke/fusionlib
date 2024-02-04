@@ -2,6 +2,7 @@ import functools
 import logging
 import sys
 import time
+from types import MethodType
 from typing import Callable, Optional, Union
 
 logger = logging.getLogger(__name__)
