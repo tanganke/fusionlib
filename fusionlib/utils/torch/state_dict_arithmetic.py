@@ -14,7 +14,7 @@ def to_device(
     state_dict: _StateDict,
     device: Union[torch.device, str],
     copy: bool = False,
-    inplace: bool = True,
+    inplace: bool = False,
 ):
     if inplace:
         ret_state_dict = state_dict

@@ -105,7 +105,15 @@ class LayerWiseMergedModel(nn.Module):
     def model(self):
         return self._model[0]
 
-    def merge_weights(self):
+    def state_dict(self):
+        sd = self.model.state_dict()
+        if self.merged_state_dict is None:
+            self.merge_weights()
+        for k, v in self.merged_state_dict.items():
+            sd[k] = v.detach()
+        return sd
+
+    def merge_weights(self, remove_keys: List[str] = None):
         """
         Merges the weights of the model.
         Call this after each update step.
@@ -122,6 +130,9 @@ class LayerWiseMergedModel(nn.Module):
         }
         for k in task_vector.keys():
             self.merged_state_dict[k] = self.merged_state_dict[k] + task_vector[k]
+        if remove_keys is not None:
+            for k in remove_keys:
+                self.merged_state_dict.pop(k)
 
     def forward(self, *args, **kwargs):
         if self.merged_state_dict is None:
