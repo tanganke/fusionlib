@@ -4,11 +4,11 @@ from typing import List
 
 import torch
 from torch import Tensor, nn
-
 from fusionlib.utils.torch import _StateDict
 from fusionlib.utils.torch.state_dict_arithmetic import (
     state_dict_add,
     state_dict_mul,
+    state_dict_sub,
     state_dict_sum,
 )
 
@@ -27,7 +27,11 @@ def task_arithmetic_merge_state_dicts(
         >>> scaling_coef = 0.1
         >>> new_state_dict = task_arithmetic_merge_state_dicts(pretrained_state_dict, finetuned_state_dicts, scaling_coef)
     """
-    task_vector = state_dict_sum(finetuned_state_dicts)
+    task_vectors = [
+        state_dict_sub(finetuned_state_dict, pretrained_state_dict)
+        for finetuned_state_dict in finetuned_state_dicts
+    ]
+    task_vector = state_dict_sum(task_vectors)
     task_vector = state_dict_mul(task_vector, scaling_coef)
     new_state_dict = state_dict_add(pretrained_state_dict, task_vector)
     return new_state_dict
